@@ -1,16 +1,22 @@
-﻿namespace PwdGenerator.Core.Rules
+﻿using System;
+
+namespace PwdGenerator.Core.Rules
 {
     public class PwdIncludeUppercaseRule : SimpleRuleApplier, IPwdSimpleRule
     {
-        public string Apply(string input)
+        public string Apply(string input, short ruleCount)
         {
             if (string.IsNullOrEmpty(input))
                 return input;
 
-            var index = GetIndex(input.Length);
+            var indexes = GetIndexes(input.Length, ruleCount);
             var chars = input.ToCharArray();
-            chars[index] = char.ToUpperInvariant(chars[index]);
-            return new string(chars);
+            return UppercaseCharsAt(input, indexes);
+        }
+
+        protected override Stack<char> GenerateContent(short ruleCount)
+        {
+            throw new NotImplementedException();
         }
     }
 }

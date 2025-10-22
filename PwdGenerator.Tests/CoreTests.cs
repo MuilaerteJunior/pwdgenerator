@@ -10,29 +10,29 @@ namespace PwdGenerator.Tests
         {
         }
 
-        [TestCase(true, true, true, 8)]
-        [TestCase(true, false, false,10)]
-        [TestCase(false, true, false, 8)]
-        [TestCase(false, false, true,16)]
-        [TestCase(false, false, false,20)]
-        [TestCase(true, true, false,36)]
-        [TestCase(false, true, true,40)]
-        [TestCase(true, false, true,50)]
-        public void VerifyGeneration(bool includeNumbers, bool includeSpecialChar, bool includeUpperCase, int length)
+        [TestCase(1, 1, 1, 8)]
+        [TestCase(1, 0, 0,10)]
+        [TestCase(0, 1, 0, 8)]
+        [TestCase(0, 0, 1,16)]
+        [TestCase(0, 0, 0,20)]
+        [TestCase(1, 1, 0,36)]
+        [TestCase(0, 1, 1,40)]
+        [TestCase(1, 0, 1,50)]
+        public void VerifyGeneration(short includeNumbers, short includeSpecialChar, short includeUpperCase, int length)
         {
 
             var config = new ConfigModel
             {
-                IncludeNumbers = includeNumbers,
-                IncludeSpecialCharacters = includeSpecialChar,
-                IncludeUppercase = includeUpperCase,
+                NumbersCount = includeNumbers,
+                SpecialCharsCount = includeSpecialChar,
+                UppercaseCount = includeUpperCase,
                 Length = length
             };
 
             string result = Core.PwdGenerator.Generate(config);
 
-            Assert.That(result.Any(c => char.IsNumber(c)), Is.EqualTo(includeNumbers));
-            Assert.That(result.Any(c => char.IsUpper(c)), Is.EqualTo(includeUpperCase));
+            Assert.That(result.Count(c => char.IsNumber(c)), Is.EqualTo(includeNumbers));
+            Assert.That(result.Count(c => char.IsUpper(c)), Is.EqualTo(includeUpperCase));
             Assert.That(result.Length == length);
         }
         [TestCase(8)]
@@ -60,44 +60,45 @@ namespace PwdGenerator.Tests
 
             Assert.Throws<ArgumentOutOfRangeException>(() => Core.PwdGenerator.Generate(config));
         }
-        [Test]
-        public void VerifyIncludeNumbers()
+        [TestCase(4)]
+        public void VerifyIncludeNumbers(short numbersCount)
         {
 
             var config = new ConfigModel
             {
-                IncludeNumbers = true,
+                NumbersCount = numbersCount,
                 Length = 8
             };
 
             string result = Core.PwdGenerator.Generate(config);
-            Assert.That(result.Any(c => char.IsNumber(c)));
+            Assert.That(result.Count(c => char.IsNumber(c)), Is.EqualTo(numbersCount));
         }
-        //[Test]
-        //public void VerifyIncludeSpecialChars()
-        //{
-
-        //    var config = new ConfigModel
-        //    {
-        //        IncludeSpecialCharacters = true,
-        //        Length = 8
-        //    };
-
-        //    string result = PwdGeneratore.Generate(config);
-        //    Assert.That(result.Any(c => char.(c)));
-        //}
-        [Test]
-        public void VerifyIncludeUppercase()
+        [TestCase(3)]
+        public void VerifyIncludeSpecialChars(short specialCharsCount)
         {
-
+            var specialChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~";
             var config = new ConfigModel
             {
-                IncludeUppercase = true,
+                SpecialCharsCount = specialCharsCount,
                 Length = 8
             };
 
             string result = Core.PwdGenerator.Generate(config);
-            Assert.That(result.Any(c => char.IsUpper(c)));
+            Assert.That(result.Count(c => specialChars.Contains(c)), Is.EqualTo(specialCharsCount));
+        }
+
+        [TestCase(2)]
+        public void VerifyIncludeUppercase(short upperCaseCount)
+        {
+
+            var config = new ConfigModel
+            {
+                UppercaseCount = upperCaseCount,
+                Length = 8
+            };
+
+            string result = Core.PwdGenerator.Generate(config);
+            Assert.That(result.Count(c => char.IsUpper(c)), Is.EqualTo(upperCaseCount));
 
         }
     }
