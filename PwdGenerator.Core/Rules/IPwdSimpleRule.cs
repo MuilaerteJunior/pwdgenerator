@@ -2,6 +2,7 @@
 {
     public interface IPwdSimpleRule
     {
-        string Apply(string input);
+        string Apply(string input, short ruleCount);
+        
     }
 }

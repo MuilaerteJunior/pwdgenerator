@@ -14,12 +14,15 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <Entry 
         Grid.Row="0" 
-        Grid.Column="0" 
+        Grid.Column="0"
+        Grid.ColumnSpan="3"
         Placeholder="Generated Password" 
         IsReadOnly="True" 
         Text="Click on generate!"
@@ -28,7 +31,7 @@
 
         <Button 
         Grid.Row="0" 
-        Grid.Column="1" 
+        Grid.Column="4" 
         Text="Generate" 
         WidthRequest="120" 
         Clicked="Button_Clicked"/>
@@ -36,44 +39,92 @@
         <HorizontalStackLayout 
             Grid.Row="2" 
             Grid.Column="0" 
-            Grid.ColumnSpan="1" 
             Spacing="20"
             VerticalOptions="Center">
-            <CheckBox 
-            Color="RoyalBlue"
-            VerticalOptions="Center" 
-            x:Name="IncludeCapitals" />
 
             <Label 
             Text="Include a capital letter"
             VerticalOptions="Center" />
-
-            <CheckBox 
-            Color="RoyalBlue"
-            VerticalOptions="Center"
-            x:Name="IncludeNumbers" />
             
-            <Label 
-            Text="Include numbers"
-            VerticalOptions="Center" />
+            <Picker 
+                Grid.Row="1" 
+                Grid.Column="0"
+                SelectedIndex="0"
+                x:Name="capitalsPicker">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:Int16}">
+                        <x:Int16>0</x:Int16>
+                        <x:Int16>1</x:Int16>
+                        <x:Int16>2</x:Int16>
+                        <x:Int16>3</x:Int16>
+                        <x:Int16>4</x:Int16>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
 
-            <CheckBox 
-            Color="RoyalBlue"
-            VerticalOptions="Center"
-            x:Name="IncludeSpecialChars" />
-            
-            <Label 
-            Text="Include special characters"
-            VerticalOptions="Center" />
 
         </HorizontalStackLayout>
 
+        <HorizontalStackLayout 
+            Grid.Row="2" 
+            Grid.Column="1"             
+            Spacing="20"
+            VerticalOptions="Center">
 
+            <Label 
+            Text="Include numbers"
+            VerticalOptions="Center" />
+            
+            <Picker 
+                Grid.Row="1" 
+                Grid.Column="0"
+                SelectedIndex="0"
+                x:Name="numbersPicker">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:Int16}">
+                        <x:Int16>0</x:Int16>
+                        <x:Int16>1</x:Int16>
+                        <x:Int16>2</x:Int16>
+                        <x:Int16>3</x:Int16>
+                        <x:Int16>4</x:Int16>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+
+        </HorizontalStackLayout>
 
         <HorizontalStackLayout 
             Grid.Row="2" 
             Grid.Column="2" 
-            Grid.ColumnSpan="1" 
+            Spacing="20"
+            VerticalOptions="Center">
+
+            <Label 
+            Text="Include special characters"
+            VerticalOptions="Center" />
+
+            <Picker 
+                Grid.Row="1" 
+                Grid.Column="0"
+                SelectedIndex="0"
+                x:Name="specialCharsPicker">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:Int16}">
+                        <x:Int16>0</x:Int16>
+                        <x:Int16>1</x:Int16>
+                        <x:Int16>2</x:Int16>
+                        <x:Int16>3</x:Int16>
+                        <x:Int16>4</x:Int16>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout 
+            Grid.Row="2" 
+            Grid.Column="3"             
             Spacing="20">
 
             <Label 
@@ -87,7 +138,6 @@
                 x:Name="lengthPicker">
                 <Picker.ItemsSource>
                     <x:Array Type="{x:Type x:Int32}">
-                        <x:Int32>6</x:Int32>
                         <x:Int32>8</x:Int32>
                         <x:Int32>10</x:Int32>
                         <x:Int32>12</x:Int32>

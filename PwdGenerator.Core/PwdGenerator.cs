@@ -8,20 +8,19 @@ namespace PwdGenerator.Core
 {
     public class PwdGenerator
     {
-        //private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         private const string Chars = "abcdefghijklmnopqrstuvwxyz";
         private static Random random = Random.Shared;
 
-        private static readonly List<(Func<ConfigModel, bool> Predicate, Func<IPwdSimpleRule> Factory)> RuleRegistry = new();
+        private static readonly List<(Func<ConfigModel, short> Predicate, Func<IPwdSimpleRule> Factory)> RuleRegistry = new();
 
         static PwdGenerator()
         {
-            RegisterRule(cfg => cfg.IncludeSpecialCharacters, () => new PwdIncludeSpecialCharactersRule());
-            RegisterRule(cfg => cfg.IncludeUppercase, () => new PwdIncludeUppercaseRule());
-            RegisterRule(cfg => cfg.IncludeNumbers, () => new PwdIncludeNumberRules());
+            RegisterRule(cfg => cfg.SpecialCharsCount, () => new PwdIncludeSpecialCharactersRule());
+            RegisterRule(cfg => cfg.UppercaseCount, () => new PwdIncludeUppercaseRule());
+            RegisterRule(cfg => cfg.NumbersCount, () => new PwdIncludeNumberRules());
         }
 
-        public static void RegisterRule(Func<ConfigModel, bool> predicate, Func<IPwdSimpleRule> factory)
+        public static void RegisterRule(Func<ConfigModel, short> predicate, Func<IPwdSimpleRule> factory)
         {
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             if (factory == null) throw new ArgumentNullException(nameof(factory));
@@ -45,22 +44,16 @@ namespace PwdGenerator.Core
         {
             if (config == null) throw new ArgumentNullException(nameof(config));
             if (config.Length <= 0) throw new NotSupportedException();
+            if (config.UppercaseCount > config.Length) throw new NotSupportedException();
+            if (config.SpecialCharsCount > config.Length) throw new NotSupportedException();
+            if (config.NumbersCount> config.Length) throw new NotSupportedException();
 
             var result = GenerateRandomString(config.Length);
 
             foreach (var (predicate, factory) in RuleRegistry)
             {
-                //try
-                //{
-                    if (predicate(config))
-                    {
-                        var applier = factory();
-                        result = applier.Apply(result);
-                    }
-                //}
-                //catch
-                //{
-                //}
+                var applier = factory();
+                result = applier.Apply(result, predicate(config));
             }
 
             return result;

@@ -41,6 +41,25 @@ Open in Visual Studio: Open the PwdGenerator.sln file in Visual Studio 2022.
 
 Run the Project: Select your desired target platform (e.g., Windows Machine, Android Emulator) from the dropdown menu and press F5 to run the application.
 
+## 📝 CLI Commands
+
+ 1. CLI behavior:
+    - Accept command line options: --length <int>, --uppercase <short>, --special <short>, --numbers <short>, --interactive, --help
+    - If --interactive is specified or no options given, prompt user for values interactively with defaults
+    - Validate numeric inputs and ensure they are within logical bounds (non-negative, counts <= length)
+    - Build a ConfigModel and call PwdGenerator.Generate(config)
+    - Print the generated password to the console
+    - Return non-zero exit codes for invalid input or exceptions
+ 2. Example usage:
+    - dotnet run -- --length 16 --uppercase 3 --special 2 --numbers 2
+    - dotnet run -- --interactive
+
+## Release notes
+
+- 1.0: Initial release with basic password generation features.
+
+- 1.1: Update to allow to inform the number of uppercase, special characters and numbers in the password.
+
 <hr>
 
 ## ⚖️ License and Usage Restrictions
