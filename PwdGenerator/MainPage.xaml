@@ -3,176 +3,174 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PwdGenerator.MainPage">
 
-    <Grid Padding="20" RowSpacing="15" ColumnSpacing="15">
+    <!--
+  PSEUDOCODE / PLAN:
+  - Wrap all content in a ScrollView to allow vertical scrolling on small Android screens.
+  - Use a VerticalStackLayout to stack t he main sections: password Entry, buttons, options, footer.
+  - Place Generate / Copy buttons in a HorizontalStackLayout that shrinks/wraps naturally.
+  - Use a FlexLayout for the option controls (capital letters, numbers, special chars, length).
+    - Set FlexLayout.Wrap="Wrap" so items flow to new lines on narrow screens.
+    - Give each option container a FlexLayout.Basis="48%" so two columns on wider screens and a single column on narrow screens.
+    - Provide MinWidthRequest to keep pickers usable.
+  - Preserve Picker names and ItemsSource so code-behind continues to work.
+  - Keep footer labels aligned and readable on small devices.
+  -->
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="18">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-
-        <Entry 
-        Grid.Row="0" 
-        Grid.Column="0"
-        Grid.ColumnSpan="3"
-        Placeholder="Generated Password" 
-        IsReadOnly="True" 
+            <!-- Password display -->
+            <Entry
+        x:Name="entryPwd"
+        Placeholder="Generated Password"
+        IsReadOnly="True"
         Text="Click on generate!"
         VerticalOptions="Center"
-        x:Name="entryPwd"/>
+        HorizontalOptions="FillAndExpand" />
 
-        <Button 
-        Grid.Row="0" 
-        Grid.Column="4" 
-        Text="Generate" 
-        WidthRequest="120" 
-        Clicked="Button_Clicked"/>
+            <!-- Buttons -->
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="FillAndExpand">
+                <Button
+          Text="Generate"
+          WidthRequest="140"
+          HorizontalOptions="Start"
+          Clicked="BtnGenerate_Click" />
+                <Button
+          Text="Copy to clipboard"
+          WidthRequest="160"
+          HorizontalOptions="Start"
+          Clicked="BtnCopy_Click" />
+            </HorizontalStackLayout>
 
-        <HorizontalStackLayout 
-            Grid.Row="2" 
-            Grid.Column="0" 
-            Spacing="20"
-            VerticalOptions="Center">
+            <!-- Options area using FlexLayout to allow wrapping on small widths -->
+            <Label Text="Options"
+             FontAttributes="Bold"
+             FontSize="Medium" />
 
-            <Label 
-            Text="Include a capital letter"
-            VerticalOptions="Center" />
-            
-            <Picker 
-                Grid.Row="1" 
-                Grid.Column="0"
-                SelectedIndex="0"
-                x:Name="capitalsPicker">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:Int16}">
-                        <x:Int16>0</x:Int16>
-                        <x:Int16>1</x:Int16>
-                        <x:Int16>2</x:Int16>
-                        <x:Int16>3</x:Int16>
-                        <x:Int16>4</x:Int16>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
+            <FlexLayout Direction="Row"
+                  Wrap="Wrap"
+                  JustifyContent="Start"
+                  AlignItems="Start"
+                  Margin="0,6,0,0">
 
+                <!-- Capital letters option -->
+                <Frame Padding="10"
+               Margin="6"
+               CornerRadius="8"
+               HasShadow="False"
+               BackgroundColor="Transparent"
+               FlexLayout.Basis="48%"                       
+               MinimumWidthRequest="180">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Include capital letters" VerticalOptions="Center" />
+                        <Picker x:Name="capitalsPicker" SelectedIndex="0">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:Int16}">
+                                    <x:Int16>0</x:Int16>
+                                    <x:Int16>1</x:Int16>
+                                    <x:Int16>2</x:Int16>
+                                    <x:Int16>3</x:Int16>
+                                    <x:Int16>4</x:Int16>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </VerticalStackLayout>
+                </Frame>
 
-        </HorizontalStackLayout>
+                <!-- Numbers option -->
+                <Frame Padding="10"
+               Margin="6"
+               CornerRadius="8"
+               HasShadow="False"
+               BackgroundColor="Transparent"
+               FlexLayout.Basis="48%"
+               MinimumWidthRequest="180">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Include numbers" VerticalOptions="Center" />
+                        <Picker x:Name="numbersPicker" SelectedIndex="0">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:Int16}">
+                                    <x:Int16>0</x:Int16>
+                                    <x:Int16>1</x:Int16>
+                                    <x:Int16>2</x:Int16>
+                                    <x:Int16>3</x:Int16>
+                                    <x:Int16>4</x:Int16>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </VerticalStackLayout>
+                </Frame>
 
-        <HorizontalStackLayout 
-            Grid.Row="2" 
-            Grid.Column="1"             
-            Spacing="20"
-            VerticalOptions="Center">
+                <!-- Special characters option -->
+                <Frame Padding="10"
+               Margin="6"
+               CornerRadius="8"
+               HasShadow="False"
+               BackgroundColor="Transparent"
+               FlexLayout.Basis="48%"
+               MinimumWidthRequest="180">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Include special characters" VerticalOptions="Center"  />
+                        <Picker x:Name="specialCharsPicker" SelectedIndex="0">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:Int16}">
+                                    <x:Int16>0</x:Int16>
+                                    <x:Int16>1</x:Int16>
+                                    <x:Int16>2</x:Int16>
+                                    <x:Int16>3</x:Int16>
+                                    <x:Int16>4</x:Int16>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </VerticalStackLayout>
+                </Frame>
 
-            <Label 
-            Text="Include numbers"
-            VerticalOptions="Center" />
-            
-            <Picker 
-                Grid.Row="1" 
-                Grid.Column="0"
-                SelectedIndex="0"
-                x:Name="numbersPicker">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:Int16}">
-                        <x:Int16>0</x:Int16>
-                        <x:Int16>1</x:Int16>
-                        <x:Int16>2</x:Int16>
-                        <x:Int16>3</x:Int16>
-                        <x:Int16>4</x:Int16>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
+                <!-- Length option -->
+                <Frame Padding="10"
+               Margin="6"
+               CornerRadius="8"
+               HasShadow="False"
+               BackgroundColor="Transparent"
+               FlexLayout.Basis="48%"
+               MinimumWidthRequest="180">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Password Length (6-50)" VerticalOptions="Center" />
+                        <Picker x:Name="lengthPicker" SelectedIndex="0">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:Int32}">
+                                    <x:Int32>8</x:Int32>
+                                    <x:Int32>10</x:Int32>
+                                    <x:Int32>12</x:Int32>
+                                    <x:Int32>16</x:Int32>
+                                    <x:Int32>20</x:Int32>
+                                    <x:Int32>24</x:Int32>
+                                    <x:Int32>32</x:Int32>
+                                    <x:Int32>40</x:Int32>
+                                    <x:Int32>50</x:Int32>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
+                    </VerticalStackLayout>
+                </Frame>
 
+            </FlexLayout>
 
-        </HorizontalStackLayout>
+            <!-- Footer -->
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="FillAndExpand" Padding="0,10,0,0">
+                <Label Text="by Muilaerte Junior"
+               FontAttributes="Bold"
+               FontSize="Small"
+               VerticalOptions="Center"
+               HorizontalOptions="StartAndExpand" />
 
-        <HorizontalStackLayout 
-            Grid.Row="2" 
-            Grid.Column="2" 
-            Spacing="20"
-            VerticalOptions="Center">
+                <Label Text="github.com/muilaertejunior"
+               FontSize="Small"
+               TextDecorations="Underline"
+               TextColor="RoyalBlue"
+               VerticalOptions="Center"
+               HorizontalOptions="End" />
+            </HorizontalStackLayout>
 
-            <Label 
-            Text="Include special characters"
-            VerticalOptions="Center" />
-
-            <Picker 
-                Grid.Row="1" 
-                Grid.Column="0"
-                SelectedIndex="0"
-                x:Name="specialCharsPicker">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:Int16}">
-                        <x:Int16>0</x:Int16>
-                        <x:Int16>1</x:Int16>
-                        <x:Int16>2</x:Int16>
-                        <x:Int16>3</x:Int16>
-                        <x:Int16>4</x:Int16>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout 
-            Grid.Row="2" 
-            Grid.Column="3"             
-            Spacing="20">
-
-            <Label 
-            Text="Password Length (6-50)"
-            VerticalOptions="Center"/>
-
-            <Picker 
-                Grid.Row="1" 
-                Grid.Column="0"
-                SelectedIndex="0"
-                x:Name="lengthPicker">
-                <Picker.ItemsSource>
-                    <x:Array Type="{x:Type x:Int32}">
-                        <x:Int32>8</x:Int32>
-                        <x:Int32>10</x:Int32>
-                        <x:Int32>12</x:Int32>
-                        <x:Int32>16</x:Int32>
-                        <x:Int32>20</x:Int32>
-                        <x:Int32>24</x:Int32>
-                        <x:Int32>32</x:Int32>
-                        <x:Int32>40</x:Int32>
-                        <x:Int32>50</x:Int32>
-                    </x:Array>
-                </Picker.ItemsSource>
-            </Picker>
-
-        </HorizontalStackLayout>
-
-        <Label 
-        Grid.Row="3" 
-        Grid.Column="0" 
-        Text="by Muilaerte Junior"
-        FontAttributes="Bold"
-        FontSize="Small"
-        VerticalOptions="Center"
-        HorizontalOptions="Start" />
-
-        <Label 
-        Grid.Row="3" 
-        Grid.Column="1" 
-        Text="github.com/muilaertejunior"
-        FontSize="Small"
-        TextDecorations="Underline"
-        TextColor="RoyalBlue"
-        VerticalOptions="Center"
-        HorizontalOptions="End" />
-
-    </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
-
-    
