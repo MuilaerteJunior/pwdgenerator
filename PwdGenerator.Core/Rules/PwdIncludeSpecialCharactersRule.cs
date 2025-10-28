@@ -19,7 +19,7 @@ namespace PwdGenerator.Core.Rules
             var finalSpecialChars = new Stack<char>();
             for (int i = 0; i < ruleCount; i++)
             {
-                finalSpecialChars.Push(SpecialChars[random.Next(SpecialChars.Length)]);
+                finalSpecialChars.Push(SpecialChars[_random.Next(SpecialChars.Length)]);
             }
             return finalSpecialChars;
         }

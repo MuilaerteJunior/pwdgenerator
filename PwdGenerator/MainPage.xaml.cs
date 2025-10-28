@@ -1,4 +1,5 @@
 ﻿using PwdGenerator.Core;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
 
 namespace PwdGenerator
 {
@@ -14,7 +15,7 @@ namespace PwdGenerator
 
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void BtnGenerate_Click(object sender, EventArgs e)
         {
             var config = new Core.Models.ConfigModel
             {
@@ -25,6 +26,16 @@ namespace PwdGenerator
             };
             var result = Core.PwdGenerator.Generate(config);
             entryPwd.Text = result;
+        }
+
+        private async void BtnCopy_Click(object sender, EventArgs e)
+        {
+            var textToCopy = entryPwd?.Text ?? string.Empty;
+            if (string.IsNullOrEmpty(textToCopy))
+                return;
+
+            await Clipboard.Default.SetTextAsync(textToCopy);
+            await DisplayAlert("Copied", "Password copied to clipboard.", "OK");
         }
     }
 }

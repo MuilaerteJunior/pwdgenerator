@@ -15,7 +15,7 @@ namespace PwdGenerator.Core.Rules
             var finalNumbers = new Stack<char>();
             for (int i = 0; i < ruleCount; i++)
             {
-                finalNumbers.Push(random.Next(9).ToString().First());
+                finalNumbers.Push(_random.Next(9).ToString().First());
             }
             return finalNumbers;
         }
