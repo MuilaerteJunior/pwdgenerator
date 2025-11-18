@@ -24,33 +24,115 @@
 		<ApplicationTitle>PwdGenerator</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.pwdgenerator</ApplicationId>
+		<ApplicationId>com.mj.pwdgenerator</ApplicationId>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.1</ApplicationDisplayVersion>
-		<ApplicationVersion>2</ApplicationVersion>
+		<!--<ApplicationDisplayVersion>1.2</ApplicationDisplayVersion>
+		<ApplicationVersion>3</ApplicationVersion>-->
 
 		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">23.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+		<AndroidSigningKeyStore>pwdgenerator.keystore</AndroidSigningKeyStore>
+		<Title>Password Generator</Title>
+		<Authors>Muilaerte Junior</Authors>
+		<Product>Password generator - free</Product>
+		<Description>This is an very useful tool that will help you create strong password and keep you safe online.
+
+Esta é uma ferramenta útil para te ajudar a criar senhas fortes e manter você seguro online.</Description>
+		<PackageIcon>ic_launcher_round.png</PackageIcon>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="$(TargetFrameowrk.Contains('-android')) and '$(Configuration)' == 'Release'">
+		<AndroidKeyStore>True</AndroidKeyStore>
+		<AndroidSigningKeyStore>pwdgenerator.keystore</AndroidSigningKeyStore>
+		<AndroidSigningKeyAlias>pwdgeneratormyapp</AndroidSigningKeyAlias>
+		<AndroidSigningKeyPass>True</AndroidSigningKeyPass>
+		<AndroidSigningStorePass>True</AndroidSigningStorePass>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+	  <DebugSymbols>False</DebugSymbols>
+	  <AndroidKeyStore>True</AndroidKeyStore>
+	  <AndroidSigningStorePass>##REMOVED##</AndroidSigningStorePass>
+	  <AndroidSigningKeyAlias>pwdgeneratormyapp</AndroidSigningKeyAlias>
+	  <AndroidSigningKeyPass>##REMOVED##</AndroidSigningKeyPass>
+	  <ApplicationTitle>Password generator - free</ApplicationTitle>
+	  <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+	  <AndroidKeyStore>True</AndroidKeyStore>
+	  <AndroidSigningStorePass>##REMOVED##</AndroidSigningStorePass>
+	  <AndroidSigningKeyAlias>pwdgeneratormyapp</AndroidSigningKeyAlias>
+	  <AndroidSigningKeyPass>##REMOVED##</AndroidSigningKeyPass>
+	  <ApplicationTitle>Password generator - free</ApplicationTitle>
+	  <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-ios|AnyCPU'">
+	  <ApplicationTitle>Password generator - free</ApplicationTitle>
+	  <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-maccatalyst|AnyCPU'">
+	  <ApplicationTitle>Password generator - free</ApplicationTitle>
+	  <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Password generator - free</ApplicationTitle>
+	  <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-ios|AnyCPU'">
+	  <ApplicationTitle>Password generator - free</ApplicationTitle>
+	  <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-maccatalyst|AnyCPU'">
+	  <ApplicationTitle>Password generator - free</ApplicationTitle>
+	  <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
+	</PropertyGroup>
+
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationTitle>Password generator - free</ApplicationTitle>
+	  <ApplicationDisplayVersion>2.0.0</ApplicationDisplayVersion>
+	  <ApplicationVersion>7</ApplicationVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- App Icon -->
+		<!-- App Icon -->		
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#8FA6A7" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
+		<!--<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />-->
 		
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
@@ -60,12 +142,64 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
+	  <AndroidResource Remove="Resources\AppIcon\ic_launcher-web.png" />
+	  <AndroidResource Remove="Resources\AppIcon\image.png" />
+	  <AndroidResource Remove="Resources\AppIcon\playstore-icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Remove="Resources\Styles\Colors_default.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Platforms\Android\Resources\values-pt\strings.xml" />
+	  <None Remove="Platforms\Android\Resources\values\strings.xml" />
+	  <None Remove="Resources\AppIcon\ic_launcher-web.png" />
+	  <None Remove="Resources\AppIcon\image.png" />
+	  <None Remove="Resources\AppIcon\playstore-icon.png" />
+	  <None Remove="Resources\AppIcon\playstore-icon.svg" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.5" />
+		<PackageReference Include="Plugin.AdMob" Version="2.3.1" />
+	</ItemGroup>
+	<ItemGroup>
 	  <ProjectReference Include="..\PwdGenerator.Core\PwdGenerator.Core.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Resources\Strings\AppResources.pt.Designer.cs">
+	    <DependentUpon>AppResources.pt.resx</DependentUpon>
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	  </Compile>
+	  <Compile Update="Resources\Strings\AppResources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AppResources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <EmbeddedResource Update="Resources\Strings\AppResources.pt.resx">
+	    <LastGenOutput>AppResources.pt.Designer.cs</LastGenOutput>
+	    <Generator>ResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Resources\Strings\AppResources.resx">
+	    <Generator>ResXFileCodeGenerator</Generator>
+	    <LastGenOutput>AppResources.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Platforms\Android\Resources\icons\mipmap-xhdpi\ic_launcher_round.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+	
+
 
 </Project>

@@ -2,21 +2,12 @@
 
 namespace PwdGenerator.Core.Rules
 {
-    public class PwdIncludeUppercaseRule : SimpleRuleApplier, IPwdSimpleRule
+    public class PwdIncludeUppercaseRule : PasswordCharacteristic, IPasswordCharacteristic
     {
-        public string Apply(string input, short ruleCount)
+        private const string CAPITAL_CHARS = "ABCDEFGHIJKLMNOPQRSTUWVXYZ";
+        public string Generate(int ruleCount)
         {
-            if (string.IsNullOrEmpty(input))
-                return input;
-
-            var indexes = GetIndexes(input.Length, ruleCount);
-            var chars = input.ToCharArray();
-            return UppercaseCharsAt(input, indexes);
-        }
-
-        protected override Stack<char> GenerateContent(short ruleCount)
-        {
-            throw new NotImplementedException();
+            return base.Generate(CAPITAL_CHARS, ruleCount);
         }
     }
 }

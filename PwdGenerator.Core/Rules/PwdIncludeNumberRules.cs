@@ -1,23 +1,15 @@
 ﻿
+using System.Text;
+
 namespace PwdGenerator.Core.Rules
 {
-    public class PwdIncludeNumberRules: SimpleRuleApplier, IPwdSimpleRule
+    public class PwdIncludeNumberRules : PasswordCharacteristic, IPasswordCharacteristic
     {
-        public string Apply(string input, short ruleCount)
-        {
-            var numberIndexes = GetIndexes(input.Length, ruleCount);
-            var numbers = GenerateContent(ruleCount);
-            return ReplaceCharAt(input, numberIndexes, numbers);
-        }
+        private const string RANGE_CHARS = "0123456789";
 
-        protected override Stack<char> GenerateContent(short ruleCount)
+        public string Generate(int ruleCount)
         {
-            var finalNumbers = new Stack<char>();
-            for (int i = 0; i < ruleCount; i++)
-            {
-                finalNumbers.Push(_random.Next(9).ToString().First());
-            }
-            return finalNumbers;
+            return base.Generate(RANGE_CHARS, ruleCount);
         }
     }
 }

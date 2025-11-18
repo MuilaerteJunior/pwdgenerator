@@ -4,10 +4,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:PwdGenerator"
-    Title="Password generator">
+    xmlns:strings="clr-namespace:PwdGenerator.Resources.Strings"
+    Title="{x:Static strings:AppResources.AppTitle}">
 
     <ShellContent
-        Title="Password generator"
+        Title="{x:Static strings:AppResources.AppTitle}"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage"        />
 
